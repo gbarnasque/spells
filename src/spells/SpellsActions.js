@@ -1,45 +1,24 @@
-import { toastr } from 'react-redux-toastr';
 import axios from 'axios';
 import consts from '../consts';
 import actionTypes from '../main/ActionTypes';
+import { toast } from 'react-toastify';
 
+const spellsURL = consts.API_URL + 'spells';
+const INITIAL_VALUES = { list: [] };
 
-export function getSpells(values) {
-    return submit(values, `${consts.API_URL}`);
+export function getSpells() {
+    return (dispatch) => {
+        axios.get(spellsURL)
+        .then(resp => {
+            dispatch({type: actionTypes.SPELLS_FETCHED, payload: resp.data});
+        })
+        .catch(resp => {
+            toast('Error trying to fetch spells. Please try again later.');
+            dispatch({type: actionTypes.SPELLS_FETCHED, payload: null});
+        });
+    };
 }
 
 export function editSpells(values) {
-    return submit(values, `${consts.OAPI_URL}`);
-}
-
-function submit(values, url) {
-    return (dispatch) => {
-        axios.post(url, values)
-            .then(resp => {
-                dispatch([
-                    { type: actionTypes.USER_FETCHED, payload: resp.data}
-                ]);
-            })
-            .catch(e => {
-                e.response.data.errors.forEach(error => toastr.error('Error', error));
-            });
-    } 
-}
-
-export function logout() {
-    return { type: actionTypes.TOKEN_VALIDATED, payload: false };
-}
-
-export function validateToken(token) {
-    return (dispatch) => {
-        if(token) {
-            axios.post(`${consts.OAPI_URL}/validateToken`, {token})
-                .then(resp => {
-                    dispatch({type: actionTypes.TOKEN_VALIDATED, payload: resp.data.valid});
-                })
-                .catch(e => dispatch({type: actionTypes.TOKEN_VALIDATED, payload: false}));
-        } else {
-            dispatch({type: actionTypes.TOKEN_VALIDATED, payload: false});
-        }
-    }
+    //return submit(values, `${consts.OAPI_URL}`);
 }

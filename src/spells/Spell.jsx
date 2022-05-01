@@ -7,9 +7,9 @@ class Spell extends React.Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         Spell
-      </div>
+      </React.Fragment>
     )
   }
 

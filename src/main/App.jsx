@@ -1,23 +1,38 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from 'react-router-dom';
+
 import consts from '../consts';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
-function App() {
-  const notify = () => toast("Wow so easy!");
+import Header from '../common/Header';
+import SpellsList from '../spells/SpellsList';
+import Spell from '../spells/Spell';
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit teste <code>src/App.jsx</code> and save to reload.
-          {consts.API_URL}
-        </p>
-      </header>
-      <button onClick={notify}>Notify!</button>
-      
-    </div>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  notify() { 
+    
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <Header />
+        <Router>
+          <Routes>
+            <Route path='/spell' element={<Spell />} />
+            <Route path='/'  element={<SpellsList />} />
+          </Routes>
+        </Router>        
+      </div>
+    );
+  }
 }
 
 export default App;

@@ -1,10 +1,9 @@
 import React from 'react';
 import { toast } from 'react-toastify';
-import { Row, Col, Form, Button} from 'react-bootstrap';
+import { Row, Col, Form, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import './LoginForm.css';
 import { login } from './LoginActions';
 //import Row from '../common/layout/Row';
 //import Grid from '../common/layout/Grid';
@@ -42,7 +41,6 @@ class LoginForm extends React.Component {
         }
         console.log(this.state);
         this.props.login(this.state);
-        //this.props.onSubmit(this.state);
     }
 
     render() {
