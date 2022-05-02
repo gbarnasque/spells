@@ -1,15 +1,11 @@
 .main-header {
-    margin-bottom: 2em;
+    margin-bottom: 1em;
 }
 .main-header nav {
-    padding: 1rem 2em;
+    padding: 1em 2em;
 }
 
 @media(max-width: 768px) {
-    .main-header {
-        margin-bottom: 1em;
-    }
-    
     .main-header nav {
         padding: 1em .5em;
     }

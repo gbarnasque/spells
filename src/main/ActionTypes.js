@@ -8,7 +8,8 @@ const actionTypes = {
     SPELL_EDIT: 'SPELL_EDIT',
     SPELL_DELETE: 'SPELL_DELETE',
     
-    TEMP: 'TEMP',
+    SPINNER_SHOW: 'SPINNER_SHOW',
+    SPINNER_HIDE: 'SPINNER_HIDE',
 }
 
 export default actionTypes;

@@ -28,7 +28,7 @@ class App extends React.Component {
             </Route>
             <Route path='/'  element={<SpellsList />} />
           </Routes>
-        </Router>        
+        </Router>      
       </div>
     );
   }

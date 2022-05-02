@@ -2,9 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { Row, Col, Form, Button } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
 import { fetchSpellInfo, createSpell, editSpell } from './SpellsActions';
+import { showSpinner } from '../common/SpinnerActions';
 
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -37,7 +39,7 @@ class Spell extends React.Component {
       id: this.props.router.location.pathname.split('/')[3] || -1,
       name: '',
       type: '',
-      createdAt: '',
+      createdAt: new Date().toISOString(),
     }
     
     this.state = {
@@ -50,44 +52,65 @@ class Spell extends React.Component {
     this.handleSpellNameChange = this.handleSpellNameChange.bind(this);
     this.handleSpellTypeChange = this.handleSpellTypeChange.bind(this);
     this.handleSpellcreatedAtChange = this.handleSpellcreatedAtChange.bind(this);
+    this.handleButtonEdit = this.handleButtonEdit.bind(this);
   }
 
   componentDidMount() {
     if(this.state.spell.id !== -1) {
+      this.props.showSpinner(true);
       this.props.fetchSpellInfo(this.state.spell);
     }
-      //this.setState({...this.state, spell: this.props.spell});
-      console.log('diff', this.state.spell, this.props.spell);
-    
-    //console.log('state', this.state);
   }
 
   componentDidUpdate(prevProps) {
     if(prevProps.spell !== this.props.spell) {
       this.setState({...this.state, spell: this.props.spell});
-      console.log('update', this.props.spell);
+      this.props.showSpinner(false);
     }
   }
 
-  handleSpellNameChange = (event) => {this.setState({spell: {...this.state.spell, name: event.target.value}}); console.log('SpellName', this.state.spell.name)};
-  handleSpellTypeChange = (event) => {this.setState({spell: {...this.state.spell, type: event.target.value}}); console.log('SpellType', this.state.spell.type)};
-  handleSpellcreatedAtChange = (event) => {this.setState({spell: {...this.state.spell, createdAt: new Date(event.target.value).toISOString()}}); console.log('SpellCreatedAt', this.state.spell.createdAt)};
+  handleSpellNameChange = (event) => this.setState({spell: {...this.state.spell, name: event.target.value}}); 
+  handleSpellTypeChange = (event) => this.setState({spell: {...this.state.spell, type: event.target.value}}); 
+  handleSpellcreatedAtChange = (event) => this.setState({spell: {...this.state.spell, createdAt: new Date(event.target.value).toISOString()}});
+
+  validateSpell() {
+    if(this.state.spell.name.length === 0) {
+      const toastId = 'invalid_spell_name';
+      toast.info('Spell cannot have empty name.',{toastId: toastId, autoClose: 2000});
+      return false;
+    }
+    if(this.state.spell.type.length === 0) {
+      const toastId = 'invalid_spell_type';
+      toast.info('Spell cannot have empty type.', {toastId: toastId, autoClose: 2000});
+      return false;
+    }
+
+    return true;
+  }
+
+  handleButtonEdit(e) {
+    e.preventDefault();
+    this.props.router.navigate(`/spell/edit/${this.state.spell.id}`);
+    this.setState({...this.state, canEdit: true});
+  }
 
   handleSubmit(e) {
     e.preventDefault();
+    this.props.showSpinner(true);
     if(this.state.newSpell) {
-      console.log('create');
-      this.props.createSpell(this.state.spell);
+      if(this.validateSpell())
+        this.props.createSpell(this.state.spell);
+      else
+        this.props.showSpinner(false);
     }
     else if(this.state.canEdit) {
-      console.log('edit');
       this.props.editSpell(this.state.spell);
     }
-    console.log('FinalState', this.state.spell);
   }
 
   render() {
-    if(this.props.redirect) {
+    const { redirect } = this.props;
+    if(redirect) {
       this.props.router.navigate('/');
     }
     else {
@@ -95,7 +118,7 @@ class Spell extends React.Component {
         <React.Fragment>
         <Form onSubmit={this.handleSubmit}>
             <Form.Group className='mb-3' controlId='formSpellName'>
-                <Form.Label>Name:</Form.Label>
+                <Form.Label>Name*:</Form.Label>
                 <Form.Control
                     className='form-control'
                     placeholder='Spell Name'
@@ -105,7 +128,7 @@ class Spell extends React.Component {
                     disabled={!this.state.canEdit}/>
             </Form.Group>
             <Form.Group className='mb-3' controlId='formSpellType'>
-                <Form.Label>Type:</Form.Label>
+                <Form.Label>Type*:</Form.Label>
                 <Form.Control
                     className='form-control'
                     placeholder='Spell Type'
@@ -115,7 +138,7 @@ class Spell extends React.Component {
                     disabled={!this.state.canEdit}/>
             </Form.Group>
             <Form.Group className='mb-3' controlId='formSpellCreatedAt'>
-                <Form.Label>Created At:</Form.Label>
+                <Form.Label>Creation Date:</Form.Label>
                 <Form.Control
                     className='form-control'
                     type='date'
@@ -124,7 +147,8 @@ class Spell extends React.Component {
                     onChange={this.handleSpellcreatedAtChange}
                     disabled={!this.state.canEdit}/>
             </Form.Group>
-            <Button variant="primary" type="submit" disabled={!this.state.canEdit} className="float-end">Submit</Button>
+            <Button variant="warning" hidden={this.state.canEdit} onClick={this.handleButtonEdit}className="float-end">Edit</Button>
+            <Button variant="primary" type="submit" hidden={!this.state.canEdit} className="float-end">Submit</Button>
           </Form>
         </React.Fragment>
       )
@@ -137,7 +161,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchSpellInfo, createSpell, editSpell }, dispatch);
+  return bindActionCreators({ fetchSpellInfo, createSpell, editSpell, showSpinner }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Spell));

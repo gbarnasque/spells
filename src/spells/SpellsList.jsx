@@ -8,25 +8,44 @@ import { Link } from 'react-router-dom'
 import './SpellsList.css';
 import { getSpells, deleteSpell } from './SpellsActions';
 import spellImage from '../images/spell_image.jpg';
+import { showSpinner } from '../common/SpinnerActions';
+import Modal from 'react-bootstrap/Modal';
 
 class SpellsList extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showConfirmDeletion: false,
+      spellToDelete: null,
+    }
+
+    this.showModalConfirmationDeletion = this.showModalConfirmationDeletion.bind(this);
+    this.handleDeleteSpell = this.handleDeleteSpell.bind(this);
+    this.closeModalConfirmationDeletion = this.closeModalConfirmationDeletion.bind(this);
   }
 
   componentDidMount() {
     this.props.getSpells();
+    this.props.showSpinner(true);
   }
 
-  teste(a) {
-    console.log('teste');
+  componentDidUpdate(prevProps) {
+    if(prevProps !== this.props) {
+        this.props.showSpinner(false);
+        this.setState({...this.state, showConfirmDeletion: false});
+    }
   }
 
-  routeChange(id) {
-   // const location = useLocation();
-    console.log(this.props.location);
-    this.props.viewSpell(id)
-   // window.location.href = window.location.href + 'spell/' + id; 
+  closeModalConfirmationDeletion() {
+    this.setState({...this.state, showConfirmDeletion: false});
+  }
+
+  showModalConfirmationDeletion(spell) {
+    this.setState({spellToDelete: spell, showConfirmDeletion: true});
+  }
+  
+  handleDeleteSpell() {
+    this.props.deleteSpell(this.state.spellToDelete);
   }
 
   renderCards() {
@@ -48,56 +67,18 @@ class SpellsList extends React.Component {
             <Link className='btn btn-warning' to={`/spell/edit/${s.id}`}>
               <i className='fa fa-pencil'></i>
             </Link>
-            {/* <Button className='btn btn-warning' onClick={() => this.teste(s)}>
-              <i className='fa fa-pencil'></i>
-            </Button> */}
-            <Button className='btn btn-danger' onClick={() => this.props.deleteSpell(s)}>
-                  <i className='fa fa-trash-o'></i>
-              </Button>
+            <Button variant='danger' onClick={() => this.showModalConfirmationDeletion(s)}>
+              <i className='fa fa-trash-o'></i>
+            </Button>
           </Card.Body>
         </Card>
       </Col>
     )); 
   }
 
-  renderRows() {
-    const spells = this.props.spells.list || [];
-    return spells.map(s => (
-      <tr key={s.id}>
-          <td>{s.createdAt}</td>
-          <td>{s.name}</td>
-          <td>{s.type}</td>
-          <td>
-              <Button className='btn btn-warning' onClick={() => this.teste(s)}>
-                  <i className='fa fa-pencil'></i>
-              </Button>
-              <Button className='btn btn-danger' onClick={() => this.teste(s)}>
-                  <i className='fa fa-trash-o'></i>
-              </Button>
-          </td>
-      </tr>
-    ));
-  }
-
   render() {
     return (
       <React.Fragment>
-        <div>
-          <table className='table'>
-              <thead>
-                  <tr>
-                      <th>Created At</th>
-                      <th>Name</th>
-                      <th>Type</th>
-                      <th className='table-actions'>Ações</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  {this.renderRows()}
-              </tbody>
-          </table>
-          {/* <Button variant="primary" className="float-end" onClick={() => this.teste()}>Create new</Button> */}
-        </div>
         <Row className='row-create-new'>
           <div className='text-center'>
             <Link to={`/spell/create`} className='btn btn-primary btn-create-new'>Create new</Link>
@@ -106,6 +87,27 @@ class SpellsList extends React.Component {
         <Row xs={1} sm={2} md={3} lg={4}>
           {this.renderCards()}
         </Row>
+        <Modal
+        show={this.state.showConfirmDeletion}
+        size="lg"
+        centered
+        title={"Confirm Deletion"}
+        >
+          <Modal.Header>
+            <Modal.Title id="contained-modal-title-vcenter">
+              Confirm Deletion
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+              <p>
+                Are you sure you want to delete the Spell <span style={{fontWeight: '700'}}>{this.state.spellToDelete?.name}</span>?
+              </p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant='danger' onClick={this.handleDeleteSpell}>Confirm</Button>
+            <Button variant='primary' onClick={this.closeModalConfirmationDeletion}>Close</Button>
+          </Modal.Footer>
+        </Modal>
       </React.Fragment>
     )
   }
@@ -117,7 +119,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ getSpells, deleteSpell }, dispatch);
+  return bindActionCreators({ getSpells, deleteSpell, showSpinner }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SpellsList);

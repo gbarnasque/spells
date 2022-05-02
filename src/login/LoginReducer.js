@@ -19,8 +19,6 @@ function isLoginExpired(expirationTime) {
 function LoginReducer(state = INITIAL_STATE, action) {
     switch(action.type) {
         case actionTypes.USER_LOGIN:
-            console.log('action', actionTypes.USER_LOGIN);
-            //console.log(action.payload);
             if(action.payload.logged) {
                 localStorage.setItem(userKey, JSON.stringify(action.payload));
                 return { ...action.payload };

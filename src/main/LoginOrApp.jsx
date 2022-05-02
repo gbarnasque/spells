@@ -7,16 +7,12 @@ import LoginForm from '../login/LoginForm';
 import { checkIfLogged } from '../login/LoginActions';
 
 class LoginOrApp extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     componentDidMount() {
         this.props.checkIfLogged();
     }
 
     render() {
-        //console.log('login', this.props.login);
         if(this.props.login.logged) {
             return (
                 <App />

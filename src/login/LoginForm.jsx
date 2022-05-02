@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { login } from './LoginActions';
-//import Row from '../common/layout/Row';
-//import Grid from '../common/layout/Grid';
+import { showSpinner } from '../common/SpinnerActions';
 
 class LoginForm extends React.Component {
     constructor(props) {
@@ -21,7 +20,7 @@ class LoginForm extends React.Component {
     }
 
     componentDidMount() {
-        
+       
     }
 
     handleUsernameChange = (event) => this.setState({username: event.target.value});
@@ -31,15 +30,14 @@ class LoginForm extends React.Component {
         event.preventDefault();
         if(this.state.username === '') {
             const toastId = 'invalid-username';
-            toast('Please provide a username.', {toastId: toastId});
+            toast.info('Please provide a valid username.', {toastId: toastId, autoClose: 2000});
             return;
         }
         if(this.state.password === '') {
             const toastId = 'invalid-password';
-            toast('Please provide a password.', {toastId: toastId});
+            toast.info('Please provide a valid password.', {toastId: toastId, autoClose: 2000});
             return;
         }
-        console.log(this.state);
         this.props.login(this.state);
     }
 
@@ -51,7 +49,7 @@ class LoginForm extends React.Component {
                         <fieldset>
                             <legend>Login</legend>
                             <Form.Group className='mb-3' controlId='formUsername'>
-                                <Form.Label>Username:</Form.Label>
+                                <Form.Label>Username*:</Form.Label>
                                 <Form.Control
                                     className='form-control'
                                     placeholder='username'
@@ -60,7 +58,7 @@ class LoginForm extends React.Component {
                                     onChange={this.handleUsernameChange}/>
                             </Form.Group>
                             <Form.Group className='mb-3' controlId='formPassword'>
-                                <Form.Label>Password:</Form.Label>
+                                <Form.Label>Password*:</Form.Label>
                                 <Form.Control
                                     className='form-control'
                                     placeholder='password'
@@ -84,7 +82,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({login}, dispatch);
+    return bindActionCreators({login, showSpinner}, dispatch);
 }
 
 

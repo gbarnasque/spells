@@ -7,16 +7,15 @@ function getEpochTime() {
 }
 
 export function login(user) {
-    console.log('entrou no login', user);
     let payload = {
         username: user.username,
         expiresAt: getEpochTime() + consts.LOGIN_EXPIRATION_TIME,
         logged: true,
     };
+    
     const toastId = 'invalid-credentials';
     if(user.username !== consts.LOGIN_USER || user.password !== consts.LOGIN_PASSWORD) {
-        console.log('toast', toastId);
-        toast('Invalid credentials. Please try again.', {toastId: toastId});
+        toast.error('Invalid credentials. Please try again.', {toastId: toastId, autoClose: 3000});
         payload.logged = false;
     }
 

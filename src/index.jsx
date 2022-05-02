@@ -12,14 +12,19 @@ import Container from 'react-bootstrap/Container';
 import './index.css';
 import LoginOrApp from './main/LoginOrApp';
 import rootReducer from './main/Reducers';
+import Spinner from './common/Spinner';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const store = configureStore({reducer: rootReducer, middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk)});
+const store = configureStore({
+  reducer: rootReducer, 
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk)
+});
 
 root.render(
   <Provider store={store}>
     <Container fluid>
       <LoginOrApp />
+      <Spinner show={true}/>  
     </Container>
     <ToastContainer />
   </Provider>
