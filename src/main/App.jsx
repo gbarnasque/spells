@@ -5,7 +5,6 @@ import {
   Route,
 } from 'react-router-dom';
 
-import consts from '../consts';
 
 import Header from '../common/Header';
 import SpellsList from '../spells/SpellsList';
@@ -16,17 +15,17 @@ class App extends React.Component {
     super(props);
   }
 
-  notify() { 
-    
-  }
-
   render() {
     return (
       <div className="App">
         <Header />
         <Router>
           <Routes>
-            <Route path='/spell' element={<Spell />} />
+            <Route path='/spell' element={<Spell />}>
+              <Route path='view/:id' element={<Spell />} />
+              <Route path='edit/:id' element={<Spell />} />
+              <Route path='create' element={<Spell />} />
+            </Route>
             <Route path='/'  element={<SpellsList />} />
           </Routes>
         </Router>        

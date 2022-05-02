@@ -17,7 +17,7 @@ class Header extends React.Component {
         return (
             <header className='main-header'>
                 <Navbar>
-                    <Navbar.Brand href="#">Spells</Navbar.Brand>
+                    <Navbar.Brand href="/">Spells</Navbar.Brand>
                     <Navbar.Collapse className="justify-content-end">
                         <Navbar.Text>
                             {this.props.username} | <a href='#' onClick={this.props.logout}>Logout</a>
