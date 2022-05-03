@@ -11,9 +11,6 @@ import SpellsList from '../spells/SpellsList';
 import Spell from '../spells/Spell';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (

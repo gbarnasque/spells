@@ -12,7 +12,7 @@ class Header extends React.Component {
     componentDidMount() {
         
     }
-
+    
     render() {
         return (
             <header className='main-header'>

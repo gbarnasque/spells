@@ -3,7 +3,7 @@ import consts from '../consts';
 import actionTypes from '../main/ActionTypes';
 import { toast } from 'react-toastify';
 
-const spellsURL = consts.MY_API_URL + 'spells';
+const spellsURL = consts.API_URL + 'spells';
 
 export function getSpells() {
     const toastId = 'fetch_spells';
@@ -17,10 +17,6 @@ export function getSpells() {
             dispatch({type: actionTypes.SPELLS_FETCHED, payload: null});
         });
     };
-}
-
-export function fetchSpellInfo(spell) {
-    return manageSpell(spell, 'get', actionTypes.SPELL_VIEW, 'Spell fetched successfully', 'Error trying to fetch data of spell. Please try again later.'); 
 }
 
 export function createSpell(spell) {
@@ -37,6 +33,10 @@ export function createSpell(spell) {
             dispatch({type: actionTypes.SPELL_CREATE, payload: null});
         });
     };
+}
+
+export function fetchSpellInfo(spell) {
+    return manageSpell(spell, 'get', actionTypes.SPELL_VIEW, 'Spell fetched successfully', 'Error trying to fetch data of spell. Please try again later.'); 
 }
 
 export function editSpell(spell) {

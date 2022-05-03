@@ -12,7 +12,6 @@ function getEpochTime() {
 }
 
 function isLoginExpired(expirationTime) {
-    console.log(getEpochTime());
     return (getEpochTime() > expirationTime);
 }
 

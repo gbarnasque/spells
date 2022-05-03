@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 
 import { fetchSpellInfo, createSpell, editSpell } from './SpellsActions';
 import { showSpinner } from '../common/SpinnerActions';
+import './Spell.css';
 
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -116,7 +117,7 @@ class Spell extends React.Component {
     else {
       return (
         <React.Fragment>
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit} className='spell-form'>
             <Form.Group className='mb-3' controlId='formSpellName'>
                 <Form.Label>Name<span className='color-red'>*</span>:</Form.Label>
                 <Form.Control

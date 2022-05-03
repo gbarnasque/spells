@@ -4,6 +4,6 @@ const consts = {
     LOGIN_PASSWORD: process.env.REACT_APP_LOGIN_PASSWORD,
     LOGIN_EXPIRATION_TIME:  Number(process.env.REACT_APP_LOGIN_EXPIRATION_TIME || 3600),
 
-    MY_API_URL: process.env.REACT_APP_MY_API_URL,
+    API_TEST_URL: process.env.REACT_APP_API_TEST_URL,
 }
 export default consts;

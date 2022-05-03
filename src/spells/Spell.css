@@ -1,0 +1,7 @@
+.spell-form {
+    margin: 1em;
+    padding: 2em 2em 3.5em 2em;
+    border: 1px solid rgb(161, 161, 161);
+    border-radius: 1em;
+    box-shadow: .25em .25em rgba(0,0,0,.1);
+}

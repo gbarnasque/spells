@@ -7,9 +7,6 @@ import Modal from 'react-bootstrap/Modal';
 import './Spinner.css';
 
 class Spinner extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() { 
         return (
