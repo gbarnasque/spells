@@ -20,7 +20,7 @@ class Header extends React.Component {
                     <Navbar.Brand href="/">Spells</Navbar.Brand>
                     <Navbar.Collapse className="justify-content-end">
                         <Navbar.Text>
-                            {this.props.username} | <a href='#' onClick={this.props.logout}>Logout</a>
+                            Logged as {this.props.username} | <a href='#' onClick={this.props.logout}>Logout</a>
                         </Navbar.Text>
                     </Navbar.Collapse>
                 </Navbar>

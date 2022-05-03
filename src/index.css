@@ -10,3 +10,51 @@ body {
 #root {
   height: 100vh;
 }
+
+.color-red {
+  color: rgb(255, 0, 0);
+}
+
+.container-fluid {
+  height: 100%;
+}
+
+.form-control:focus {
+  border-color: rgb(161, 161, 161);
+  box-shadow: 0 0 0 .2em rgba(0,0,0,.1);
+}
+
+.btn-minimalist {
+  color: black;
+  background-color: white;
+  border: 1px solid rgb(161, 161, 161);
+  box-shadow: .1em .1em rgba(0,0,0,.1);
+}
+
+.btn-minimalist:hover {
+  color: white;
+  background-color: rgb(34, 34, 34);
+  border: 1px solid rgb(161, 161, 161);
+  box-shadow: .2em .2em rgba(0,0,0,.1);
+}
+.btn-minimalist:focus {
+  color: white;
+  background-color: rgb(34, 34, 34);
+  border: 1px solid rgb(161, 161, 161);
+  box-shadow: .2em .2em rgba(0,0,0,.1);
+}
+.btn-minimalist:active {
+  color: white;
+  background-color: rgb(34, 34, 34);
+  border: 1px solid rgb(161, 161, 161);
+  box-shadow: .2em .2em rgba(0,0,0,.1);
+}
+
+@media(max-width: 768px) {
+  .btn-minimalist:hover {
+    color: black;
+    background-color: white;
+    border: 1px solid rgb(161, 161, 161);
+    box-shadow: .1em .1em rgba(0,0,0,.1);
+  }
+}

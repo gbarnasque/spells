@@ -3,7 +3,7 @@ import consts from '../consts';
 import actionTypes from '../main/ActionTypes';
 import { toast } from 'react-toastify';
 
-const spellsURL = consts.API_URL + 'spells';
+const spellsURL = consts.MY_API_URL + 'spells';
 
 export function getSpells() {
     const toastId = 'fetch_spells';

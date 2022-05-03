@@ -64,10 +64,10 @@ class SpellsList extends React.Component {
             </Link>
           </Card.Body>
           <Card.Body className='text-center card-botom'>
-            <Link className='btn btn-warning' to={`/spell/edit/${s.id}`}>
+            <Link className='btn btn-minimalist' to={`/spell/edit/${s.id}`}>
               <i className='fa fa-pencil'></i>
             </Link>
-            <Button variant='danger' onClick={() => this.showModalConfirmationDeletion(s)}>
+            <Button className='btn btn-minimalist' onClick={() => this.showModalConfirmationDeletion(s)}>
               <i className='fa fa-trash-o'></i>
             </Button>
           </Card.Body>
@@ -81,7 +81,7 @@ class SpellsList extends React.Component {
       <React.Fragment>
         <Row className='row-create-new'>
           <div className='text-center'>
-            <Link to={`/spell/create`} className='btn btn-primary btn-create-new'>Create new</Link>
+            <Link to={`/spell/create`} className='btn btn-minimalist btn-create-new'>Create new spell</Link>
           </div>
         </Row>
         <Row xs={1} sm={2} md={3} lg={4}>
@@ -91,7 +91,6 @@ class SpellsList extends React.Component {
         show={this.state.showConfirmDeletion}
         size="lg"
         centered
-        title={"Confirm Deletion"}
         >
           <Modal.Header>
             <Modal.Title id="contained-modal-title-vcenter">
@@ -104,8 +103,8 @@ class SpellsList extends React.Component {
               </p>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant='danger' onClick={this.handleDeleteSpell}>Confirm</Button>
-            <Button variant='primary' onClick={this.closeModalConfirmationDeletion}>Close</Button>
+            <Button className='btn btn-minimalist' onClick={this.handleDeleteSpell}>Confirm</Button>
+            <Button className='btn btn-minimalist' onClick={this.closeModalConfirmationDeletion}>Close</Button>
           </Modal.Footer>
         </Modal>
       </React.Fragment>

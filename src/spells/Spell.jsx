@@ -118,7 +118,7 @@ class Spell extends React.Component {
         <React.Fragment>
         <Form onSubmit={this.handleSubmit}>
             <Form.Group className='mb-3' controlId='formSpellName'>
-                <Form.Label>Name*:</Form.Label>
+                <Form.Label>Name<span className='color-red'>*</span>:</Form.Label>
                 <Form.Control
                     className='form-control'
                     placeholder='Spell Name'
@@ -128,7 +128,7 @@ class Spell extends React.Component {
                     disabled={!this.state.canEdit}/>
             </Form.Group>
             <Form.Group className='mb-3' controlId='formSpellType'>
-                <Form.Label>Type*:</Form.Label>
+                <Form.Label>Type<span className='color-red'>*</span>:</Form.Label>
                 <Form.Control
                     className='form-control'
                     placeholder='Spell Type'
@@ -147,8 +147,8 @@ class Spell extends React.Component {
                     onChange={this.handleSpellcreatedAtChange}
                     disabled={!this.state.canEdit}/>
             </Form.Group>
-            <Button variant="warning" hidden={this.state.canEdit} onClick={this.handleButtonEdit}className="float-end">Edit</Button>
-            <Button variant="primary" type="submit" hidden={!this.state.canEdit} className="float-end">Submit</Button>
+            <Button hidden={this.state.canEdit} onClick={this.handleButtonEdit} className="btn btn-minimalist float-end">Edit</Button>
+            <Button type="submit" hidden={!this.state.canEdit} className="btn btn-minimalist float-end">Submit</Button>
           </Form>
         </React.Fragment>
       )

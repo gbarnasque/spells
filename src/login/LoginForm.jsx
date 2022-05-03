@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 
 import { login } from './LoginActions';
 import { showSpinner } from '../common/SpinnerActions';
+import './LoginForm.css';
 
 class LoginForm extends React.Component {
     constructor(props) {
@@ -43,13 +44,13 @@ class LoginForm extends React.Component {
 
     render() {
         return (
-            <Row>
-                <Col md='8' lg='6' xl='4' className='mx-md-auto'>
-                    <Form onSubmit={this.handleSubmit}>
+            <Row className='row-login-form'>
+                <Col md='8' lg='6' xl='6' className='mx-md-auto'>
+                    <Form onSubmit={this.handleSubmit} className='login-form'>
                         <fieldset>
                             <legend>Login</legend>
                             <Form.Group className='mb-3' controlId='formUsername'>
-                                <Form.Label>Username*:</Form.Label>
+                                <Form.Label>Username<span className='color-red'>*</span>:</Form.Label>
                                 <Form.Control
                                     className='form-control'
                                     placeholder='username'
@@ -58,7 +59,7 @@ class LoginForm extends React.Component {
                                     onChange={this.handleUsernameChange}/>
                             </Form.Group>
                             <Form.Group className='mb-3' controlId='formPassword'>
-                                <Form.Label>Password*:</Form.Label>
+                                <Form.Label>Password<span className='color-red'>*</span>:</Form.Label>
                                 <Form.Control
                                     className='form-control'
                                     placeholder='password'
@@ -66,7 +67,7 @@ class LoginForm extends React.Component {
                                     value={this.state.password}
                                     onChange={this.handlePasswordChange}/>
                             </Form.Group>
-                            <Button variant="primary" type="submit" className="float-end">Submit</Button>
+                            <Button type="submit" className="btn btn-minimalist float-end">Submit</Button>
                         </fieldset>
                     </Form>
                 </Col>
